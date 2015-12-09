@@ -186,13 +186,17 @@ BigInteger operator /(const BigInteger &a, const BigInteger &b)
 {
     BigInteger c;
     // Add code here
+    
     return c;
 }
 
 bool operator ==(const BigInteger &a, const BigInteger &b)
 {
     // Add code here
-
+    if (a.d[0] != b.d[0]) return false;
+    for (int i = 1; i <= a.d[0]; ++i)
+        if (a.d[i] != b.d[i])
+            return false;
     return true;
 }
 
