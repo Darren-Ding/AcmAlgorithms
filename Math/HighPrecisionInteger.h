@@ -6,6 +6,7 @@
 #define ACMALGORITHMS_HIGHPRECISIONINTEGER_H
 
 #include <string>
+#include <algorithm>
 
 const int Ten[4] = {1, 10, 100, 1000};  //
 const int MaxLen = 1000;    // 最大位数
@@ -16,7 +17,7 @@ struct BigInteger
 
     BigInteger(const std::string &s = "0")
     {
-        int len = s.size();
+        size_t len = s.size();
         d[0] = (len - 1) / 4 + 1;   //
         for (int i = 1; i < len; ++i) d[i] = 0; //
         for (int i = len - 1; i >= 0; --i)
@@ -74,7 +75,7 @@ bool operator <(const BigInteger &a, const BigInteger &b)
 BigInteger operator +(const BigInteger &a, const BigInteger &b)
 {
     BigInteger c;
-    c.d[0] = max(a.d[0], b.d[0]);
+    c.d[0] = a.d[0] > b.d[0] ? a.d[0] : b.d[0];
     int i, x = 0;
     for (i = 0; i <= c.d[0]; ++i)
     {
@@ -93,7 +94,19 @@ BigInteger operator +(const BigInteger &a, const BigInteger &b)
 
 BigInteger operator -(const BigInteger &a, const BigInteger &b)
 {
+    BigInteger c;
+    c.d[0] = a.d[0];
+    int i, x = 0;
+    for (i = 0; i <= c.d[0]; ++i)
+    {
+        x = 10000 + a.d[i] - b.d[i] + x;
+        c.d[i] = x % 10000;
+        x = x / 10000 - 1;
+    }
+    while ((c.d[0] > 1) && (c.d[c.d[0]] == 0))
+        --c.d[0];
 
+    return c;
 }
 
 BigInteger operator *(const BigInteger &a, const BigInteger &b)
