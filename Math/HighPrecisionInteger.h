@@ -134,12 +134,30 @@ BigInteger operator *(const BigInteger &a, const BigInteger &b)
 bool smaller(const BigInteger &a, const BigInteger &b, int delta)
 {
     // Add code here
+    if (a.d[0] + delta != b.d[0])
+        return a.d[0] + delta < b.d[0];
+
+    int i;
+    for (i = a.d[0]; i > 0; --i)
+        if (a.d[i] != b.d[i + delta])
+            return a.d[i] < b.d[i + delta];
+
     return true;
 }
 
-void minus(const BigInteger &a, const BigInteger &b, int delta)
+void minus(BigInteger &a, const BigInteger &b, int delta)
 {
     // Add code here
+    int i, x = 0;
+    for (i = 1; i <= a.d[0] - delta; ++i)
+    {
+        x = 10000 + a.d[i + delta] - b.d[i] + x;
+        a.d[i + delta] = x % 10000;
+        x = x / 10000 - 1;
+    }
+
+    while ((a.d[0] > 1) && (a.d[a.d[0]] == 0))
+        --a.d[0];
 }
 
 BigInteger operator *(const BigInteger &a, const int &k)
