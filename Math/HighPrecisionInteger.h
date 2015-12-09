@@ -164,6 +164,20 @@ BigInteger operator *(const BigInteger &a, const int &k)
 {
     BigInteger c;
     // Add code here
+    c.d[0] = a.d[0];
+    int i, x = 0;
+    for (i = 1; i <= a.d[0]; ++i)
+    {
+        x = a.d[i] * k + x;
+        c.d[i] = x % 10000;
+        x /= 10000;
+    }
+
+    while (x > 0)
+    {
+        c.d[++c.d[0]] = x % 10000;
+        x /= 10000;
+    }
 
     return c;
 }
@@ -172,7 +186,6 @@ BigInteger operator /(const BigInteger &a, const BigInteger &b)
 {
     BigInteger c;
     // Add code here
-
     return c;
 }
 
