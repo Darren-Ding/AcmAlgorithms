@@ -73,7 +73,22 @@ bool operator <(const BigInteger &a, const BigInteger &b)
 
 BigInteger operator +(const BigInteger &a, const BigInteger &b)
 {
+    BigInteger c;
+    c.d[0] = max(a.d[0], b.d[0]);
+    int i, x = 0;
+    for (i = 0; i <= c.d[0]; ++i)
+    {
+        x = a.d[i] + b.d[i] + x;
+        c.d[i] = x % 10000;
+        x /= 10000;
+    }
+    while (x != 0)
+    {
+        c.d[++c.d[0]] = x % 10000;
+        x /= 10000;
+    }
 
+    return c;
 }
 
 BigInteger operator -(const BigInteger &a, const BigInteger &b)
