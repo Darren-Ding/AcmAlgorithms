@@ -16,7 +16,7 @@ int main()
 
 void TestMathHighPrecisionInteger()
 {
-    BigInteger zero("0");   // zero --- A bug unfixed!
+    BigInteger zero("0");
     BigInteger one("1");
     BigInteger nine2("99");
     BigInteger big("1234567890098765432232341874874717837483724123737473274732737217437471");

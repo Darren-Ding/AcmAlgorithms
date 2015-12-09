@@ -19,7 +19,7 @@ struct BigInteger
     {
         size_t len = s.size();
         d[0] = (len - 1) / 4 + 1;   //
-        for (int i = 1; i < len; ++i) d[i] = 0; //
+        for (int i = 1; i < MaxLen; ++i) d[i] = 0; //
         for (int i = len - 1; i >= 0; --i)
         {
             int j = (len - i - 1) / 4 + 1;
@@ -77,7 +77,7 @@ BigInteger operator +(const BigInteger &a, const BigInteger &b)
     BigInteger c;
     c.d[0] = a.d[0] > b.d[0] ? a.d[0] : b.d[0];
     int i, x = 0;
-    for (i = 0; i <= c.d[0]; ++i)
+    for (i = 1; i <= c.d[0]; ++i)
     {
         x = a.d[i] + b.d[i] + x;
         c.d[i] = x % 10000;
@@ -97,7 +97,7 @@ BigInteger operator -(const BigInteger &a, const BigInteger &b)
     BigInteger c;
     c.d[0] = a.d[0];
     int i, x = 0;
-    for (i = 0; i <= c.d[0]; ++i)
+    for (i = 1; i <= c.d[0]; ++i)
     {
         x = 10000 + a.d[i] - b.d[i] + x;
         c.d[i] = x % 10000;
@@ -114,15 +114,16 @@ BigInteger operator *(const BigInteger &a, const BigInteger &b)
     BigInteger c;
     c.d[0] = a.d[0] + b.d[0];
     int i, j, x;
-    for (i = 0; i <= a.d[0]; ++i)
+    for (i = 1; i <= a.d[0]; ++i)
     {
         x = 0;
-        for (j = 0; j < b.d[0]; ++j)
+        for (j = 1; j <= b.d[0]; ++j)
         {
             x = a.d[i] * b.d[i] + x + c.d[i + j - 1];
             c.d[i + j - 1] = x % 10000;
             x /= 10000;
         }
+        c.d[i + b.d[0]] = x;
     }
 
     while((c.d[0] > 1) && (c.d[c.d[0]] == 0))
@@ -197,14 +198,13 @@ BigInteger operator /(const BigInteger &a, const BigInteger &b)
     for (i = a.d[0] - b.d[0]; i >= 0; --i)
     {
         temp = 8192;
-        for (j = 13; j >= 13; --j)
+        for (j = 13; j >= 0; --j)
         {
             if (smaller(mid[j], e, i))
             {
                 minus(e, mid[j], i);
                 c.d[i + 1] += temp;
             }
-
             temp /= 2;
         }
     }
