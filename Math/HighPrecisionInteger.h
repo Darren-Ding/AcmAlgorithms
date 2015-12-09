@@ -186,7 +186,33 @@ BigInteger operator /(const BigInteger &a, const BigInteger &b)
 {
     BigInteger c;
     // Add code here
-    
+    BigInteger e;
+    BigInteger mid[15];
+
+    mid[0] = b;
+    e = a;
+    int i, j, temp;
+    for (i = 1; i <= 13; ++i)
+        mid[i] = mid[i - 1] * 2;
+    for (i = a.d[0] - b.d[0]; i >= 0; --i)
+    {
+        temp = 8192;
+        for (j = 13; j >= 13; --j)
+        {
+            if (smaller(mid[j], e, i))
+            {
+                minus(e, mid[j], i);
+                c.d[i + 1] += temp;
+            }
+
+            temp /= 2;
+        }
+    }
+
+    c.d[0] = 1 > (a.d[0] - b.d[0] + 1) ? 1 : (a.d[0] - b.d[0] + 1);
+    while ((c.d[0] > 1) && (c.d[c.d[0]] == 0))
+        --c.d[0];
+
     return c;
 }
 
