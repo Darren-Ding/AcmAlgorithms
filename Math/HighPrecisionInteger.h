@@ -111,32 +111,58 @@ BigInteger operator -(const BigInteger &a, const BigInteger &b)
 
 BigInteger operator *(const BigInteger &a, const BigInteger &b)
 {
+    BigInteger c;
+    c.d[0] = a.d[0] + b.d[0];
+    int i, j, x;
+    for (i = 0; i <= a.d[0]; ++i)
+    {
+        x = 0;
+        for (j = 0; j < b.d[0]; ++j)
+        {
+            x = a.d[i] * b.d[i] + x + c.d[i + j - 1];
+            c.d[i + j - 1] = x % 10000;
+            x /= 10000;
+        }
+    }
 
+    while((c.d[0] > 1) && (c.d[c.d[0]] == 0))
+        --c.d[0];
+
+    return c;
 }
 
 bool smaller(const BigInteger &a, const BigInteger &b, int delta)
 {
-
+    // Add code here
+    return true;
 }
 
-bool minus(const BigInteger &a, const BigInteger &b, int delta)
+void minus(const BigInteger &a, const BigInteger &b, int delta)
 {
-
+    // Add code here
 }
 
 BigInteger operator *(const BigInteger &a, const int &k)
 {
+    BigInteger c;
+    // Add code here
 
+    return c;
 }
 
 BigInteger operator /(const BigInteger &a, const BigInteger &b)
 {
+    BigInteger c;
+    // Add code here
 
+    return c;
 }
 
 bool operator ==(const BigInteger &a, const BigInteger &b)
 {
+    // Add code here
 
+    return true;
 }
 
 #endif //ACMALGORITHMS_HIGHPRECISIONINTEGER_H
